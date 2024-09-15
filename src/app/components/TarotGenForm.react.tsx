@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import { getTarotCardsList } from "../services/tarotGen"; // API call for fetching tarot cards
+import { TarotFormData } from "./types/tarotFormData";
 
-const TartotGenForm = ({ onSubmit }: { onSubmit: (formData: any) => void }) => {
+const TartotGenForm = ({
+  onSubmit,
+  loading,
+}: {
+  onSubmit: (formData: TarotFormData) => void;
+  loading: boolean;
+}) => {
   const [tarotCards, setTarotCards] = useState<string[]>([]);
-  const [selectedTarotCard, setSelectedTarotCard] = useState<string>("");
-  const [color1, setColor1] = useState<string>("#000000");
-  const [color2, setColor2] = useState<string>("#000000");
-  const [themeInput, setThemeInput] = useState<string>("");
+  const [formData, setFormData] = useState<TarotFormData>({
+    tarotCard: "",
+    color1: "#000000",
+    theme: "",
+  });
 
   // Fetch tarot cards on component mount
   useEffect(() => {
@@ -22,28 +30,36 @@ const TartotGenForm = ({ onSubmit }: { onSubmit: (formData: any) => void }) => {
     fetchTarotCards();
   }, []);
 
-  // Handle form submission and pass data back to the parent
+  // Handle input changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value, // Dynamically update the field based on the input's name attribute
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = {
-      selectedTarotCard,
-      color1,
-      color2,
-      themeInput,
-    };
     onSubmit(formData); // Pass the form data back to the wrapper component
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-gray-800 p-6 rounded-lg max-h-1/2"
+    >
       {/* Select Input */}
       <div className="mb-4 max-h-1/2">
         <label className="block text-gray-300 text-sm font-bold mb-2">
           Card Selection
         </label>
         <select
-          value={selectedTarotCard}
-          onChange={(e) => setSelectedTarotCard(e.target.value)}
+          name="tarotCard" // Added name attribute
+          value={formData.tarotCard}
+          onChange={handleChange}
           className="w-full bg-gray-700 text-gray-300 border border-gray-600 rounded py-2 px-3 focus:outline-none focus:bg-gray-600"
         >
           <option value="" disabled>
@@ -65,19 +81,9 @@ const TartotGenForm = ({ onSubmit }: { onSubmit: (formData: any) => void }) => {
           </label>
           <input
             type="color"
-            value={color1}
-            onChange={(e) => setColor1(e.target.value)}
-            className="w-full h-10 p-0 bg-transparent border-0 focus:outline-none"
-          />
-        </div>
-        <div className="w-1/2">
-          <label className="block text-gray-300 text-sm font-bold mb-2">
-            Use Color 2
-          </label>
-          <input
-            type="color"
-            value={color2}
-            onChange={(e) => setColor2(e.target.value)}
+            name="color1" // Added name attribute
+            value={formData.color1}
+            onChange={handleChange}
             className="w-full h-10 p-0 bg-transparent border-0 focus:outline-none"
           />
         </div>
@@ -90,22 +96,27 @@ const TartotGenForm = ({ onSubmit }: { onSubmit: (formData: any) => void }) => {
         </label>
         <input
           type="text"
-          value={themeInput}
-          onChange={(e) => setThemeInput(e.target.value)}
+          name="theme" // Added name attribute
+          value={formData.theme}
+          onChange={handleChange}
           maxLength={40}
           className="w-full bg-gray-700 text-gray-300 border border-gray-600 rounded py-2 px-3 focus:outline-none focus:bg-gray-600"
         />
         <p className="text-gray-500 text-xs mt-1">
-          {themeInput.length}/40 characters
+          {formData.theme.length}/40 characters
         </p>
       </div>
 
-      {/* Submit Button */}
       <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none"
+        disabled={loading}
+        className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none flex items-center justify-center`}
       >
-        Submit
+        {loading ? (
+          <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-white"></div>
+        ) : (
+          "Submit"
+        )}
       </button>
     </form>
   );
