@@ -1,10 +1,35 @@
-"use client";
 import { useState } from "react";
 import TarotGenForm from "./TarotGenForm.react";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
-import { generateTarotCard } from "../services/tarotGen";
+import { generateTarotCard } from "../../services/tarotGen";
 import { TarotFormData } from "./types/tarotFormData";
 import TarotPlaceholder from "./TarotPlaceholder.react";
+import TarotCardSlider from "../tarot_card_slider/TarotCardSlider";
+import { PlaceholderTarotCardData } from "@/app/page";
+
+// all image paths
+const sliderImagePaths: Array<PlaceholderTarotCardData> = [
+  {
+    src: "/images/3-of-cups.webp",
+    cardName: "3 of Cups",
+    cardType: "Minor Acanas",
+  },
+  {
+    src: "/images/5-of-wands.webp",
+    cardName: "5 of Wands",
+    cardType: "Minor Acanas",
+  },
+  {
+    src: "/images/ace_of_pentacles.webp",
+    cardName: "Ace of Pentacles",
+    cardType: "Minor Acanas",
+  },
+  {
+    src: "/images/japaneseDeathTarot.png",
+    cardName: "Death",
+    cardType: "Major Acanas",
+  },
+];
 
 const TarotGenFormWrapper = () => {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -29,9 +54,9 @@ const TarotGenFormWrapper = () => {
 
   return (
     <div
-      className={`bg-gray-900 grid relative transition-all duration-300 gap-2 h-[50vh] ${
+      className={`bg-gray-900 grid relative transition-all duration-300 gap-2 h-auto rounded-md ${
         isExpanded
-          ? "grid-cols-1 md:grid-cols-[1fr_2fr]"
+          ? "grid-cols-1 md:grid-cols-[1fr_1fr]"
           : "grid-cols-1 md:grid-cols-[3rem_1fr]"
       }`}
     >
@@ -45,14 +70,14 @@ const TarotGenFormWrapper = () => {
         )}
         <button
           onClick={toggleForm}
-          className={`flex items-center justify-center text-gray-300 hover:text-white mb-4 
+          className={`hiden md:flex items-center justify-center text-gray-300 hover:text-white mb-4 
             focus:outline-none absolute right-0 top-1/2 transform -translate-y-1/2 rounded-full 
             bg-slate-400`}
           aria-label={isExpanded ? "Collapse Form" : "Expand Form"}
           title={isExpanded ? "Collapse Form" : "Expand Form"}
         >
           <ChevronRightIcon
-            className={`h-6 w-6 transition-transform duration-300 ${
+            className={`h-6 w-6 transition-transform duration-300 hidden md:block ${
               isExpanded ? "transform rotate-180" : ""
             }`}
           />
@@ -67,12 +92,12 @@ const TarotGenFormWrapper = () => {
           <img
             src={imageURL}
             alt="Generated Tarot Card"
-            className="h-full rounded-md pb-8"
+            className="h-1/2 rounded-md pb-8"
           />
         ) : (
-          <p className="text-gray-300">
-            Submit the form to generate a tarot card.
-          </p>
+          <div className="w-full h-full">
+            <TarotCardSlider images={sliderImagePaths} />
+          </div>
         )}
       </div>
     </div>

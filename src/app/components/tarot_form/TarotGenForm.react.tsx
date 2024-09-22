@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { getTarotCardsList } from "../services/tarotGen"; // API call for fetching tarot cards
+import { getTarotCardsList } from "../../services/tarotGen"; // API call for fetching tarot cards
 import { TarotFormData } from "./types/tarotFormData";
+import { TarotCard } from "./types/tarotCard";
 
 const TartotGenForm = ({
   onSubmit,
@@ -9,7 +10,7 @@ const TartotGenForm = ({
   onSubmit: (formData: TarotFormData) => void;
   loading: boolean;
 }) => {
-  const [tarotCards, setTarotCards] = useState<string[]>([]);
+  const [tarotCards, setTarotCards] = useState<TarotCard[]>([]);
   const [formData, setFormData] = useState<TarotFormData>({
     tarotCard: "",
     color1: "#000000",
@@ -66,8 +67,8 @@ const TartotGenForm = ({
             Select an option
           </option>
           {tarotCards.map((card, index) => (
-            <option key={index} value={card} className="bg-gray-800">
-              {card}
+            <option key={index} value={card.name} className="bg-gray-800">
+              {card.name}
             </option>
           ))}
         </select>
