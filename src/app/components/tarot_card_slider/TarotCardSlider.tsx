@@ -33,16 +33,23 @@ const TarotCardSlider: React.FC<TarotCardSliderProps> = ({ images }) => {
         Pagination,
         Keyboard,
         Mousewheel,
-        EffectCards,
+        // EffectCards,
       ]}
       grabCursor={true}
       centeredSlides={true}
       slidesPerView="auto"
       loop={true}
-      effect={"cards"}
-      cardsEffect={{
-        slideShadows: false,
-        rotate: true,
+      effect={"coverflow"}
+      // cardsEffect={{
+      //   slideShadows: false,
+      //   rotate: true,
+      // }}
+      coverflowEffect={{
+        rotate: 0,
+        stretch: 50,
+        depth: 300,
+        modifier: 1,
+        slideShadows: true,
       }}
       keyboard={{ enabled: true }}
       mousewheel={{ forceToAxis: true }}

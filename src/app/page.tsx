@@ -1,9 +1,5 @@
 "use client";
 
-import TarotCardSlider from "./components/tarot_card_slider/TarotCardSlider";
-// import Slider from "./components/tarot_card_slider/Slider";
-import TarotGenFormWrapper from "./components/tarot_form/TarotGenFormWrapper.react";
-
 export type PlaceholderTarotCardData = {
   src: string;
   cardName: string;
@@ -13,7 +9,7 @@ export type PlaceholderTarotCardData = {
 export default function Home() {
   return (
     <>
-      <TarotGenFormWrapper />
+      <div>Homepage will be here</div>
     </>
   );
 }

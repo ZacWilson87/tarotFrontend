@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { getTarotCardsList } from "../../services/tarotGen"; // API call for fetching tarot cards
+import { useState, useEffect, useCallback } from "react";
 import { TarotFormData } from "./types/tarotFormData";
 import { TarotCard } from "./types/tarotCard";
+import { getPlaceholderDeck } from "@/app/services/deck";
 
 const TartotGenForm = ({
   onSubmit,
@@ -10,7 +10,7 @@ const TartotGenForm = ({
   onSubmit: (formData: TarotFormData) => void;
   loading: boolean;
 }) => {
-  const [tarotCards, setTarotCards] = useState<TarotCard[]>([]);
+  const [placeholderDeck, setPlaceholderDeck] = useState<TarotCard[]>([]);
   const [formData, setFormData] = useState<TarotFormData>({
     tarotCard: "",
     color1: "#000000",
@@ -19,16 +19,16 @@ const TartotGenForm = ({
 
   // Fetch tarot cards on component mount
   useEffect(() => {
-    const fetchTarotCards = async () => {
+    const fetchPlaceholderDeck = async () => {
       try {
-        const cards = await getTarotCardsList();
-        setTarotCards(cards);
+        const cards = await getPlaceholderDeck();
+        setPlaceholderDeck(cards);
       } catch (error) {
         console.error("Failed to fetch tarot cards:", error);
       }
     };
 
-    fetchTarotCards();
+    fetchPlaceholderDeck();
   }, []);
 
   // Handle input changes
@@ -42,17 +42,19 @@ const TartotGenForm = ({
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit(formData); // Pass the form data back to the wrapper component
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      onSubmit(formData); // Pass the form data back to the wrapper component
+    },
+    [formData, onSubmit]
+  );
 
   return (
     <form
       onSubmit={handleSubmit}
       className="bg-gray-800 p-6 rounded-lg max-h-1/2"
     >
-      {/* Select Input */}
       <div className="mb-4 max-h-1/2">
         <label className="block text-gray-300 text-sm font-bold mb-2">
           Card Selection
@@ -66,7 +68,7 @@ const TartotGenForm = ({
           <option value="" disabled>
             Select an option
           </option>
-          {tarotCards.map((card, index) => (
+          {placeholderDeck.map((card, index) => (
             <option key={index} value={card.name} className="bg-gray-800">
               {card.name}
             </option>
@@ -74,7 +76,6 @@ const TartotGenForm = ({
         </select>
       </div>
 
-      {/* Hex Color Inputs */}
       <div className="mb-4 flex space-x-4">
         <div className="w-1/2">
           <label className="block text-gray-300 text-sm font-bold mb-2">
@@ -90,7 +91,6 @@ const TartotGenForm = ({
         </div>
       </div>
 
-      {/* Text Input */}
       <div className="mb-4">
         <label className="block text-gray-300 text-sm font-bold mb-2">
           Theme
