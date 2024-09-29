@@ -26,11 +26,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full w-full bg-gray-100">
+    <html lang="en" className="h-full w-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full relative`}
       >
-        <HeaderAppWrapper>{children}</HeaderAppWrapper>
+        {/* Background image with opacity */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-70"
+          style={{ backgroundImage: "url('/images/bg2.webp')" }}
+        ></div>
+
+        {/* Content wrapper */}
+        <div className="relative">
+          <HeaderAppWrapper>{children}</HeaderAppWrapper>
+        </div>
       </body>
     </html>
   );

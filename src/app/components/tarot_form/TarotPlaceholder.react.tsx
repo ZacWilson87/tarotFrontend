@@ -1,6 +1,6 @@
 const TarotPlaceholder = () => {
   return (
-    <div className="flex justify-start w-full h-full pb-8 overflow-hidden">
+    <div className="flex justify-center w-full h-full pb-8 overflow-hidden">
       <div className="p-4 rounded-lg border border-gray-300 shadow-lg max-h-full flex flex-col items-center justify-center">
         <div className="animate-pulse flex flex-col items-center">
           <svg

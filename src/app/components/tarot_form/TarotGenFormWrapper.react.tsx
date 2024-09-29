@@ -54,11 +54,11 @@ const TarotGenFormWrapper = () => {
 
   return (
     <div
-      className={`bg-gray-900 grid relative transition-all duration-300 gap-2 h-auto rounded-md ${
+      className={`bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-5 bg-white grid relative transition-all duration-300 gap-2 h-auto rounded-md ${
         isExpanded
           ? "grid-cols-1 md:grid-cols-[1fr_1fr]"
           : "grid-cols-1 md:grid-cols-[3rem_1fr]"
-      }`}
+      } shadow-xl shadow-gray-700 border border-gray-600`}
     >
       {/* Left Side - Form */}
       <div className="relative h-full">
@@ -85,7 +85,7 @@ const TarotGenFormWrapper = () => {
       </div>
 
       {/* Right Side - Image or Loading Card */}
-      <div className="relative m-4 flex justify-start h-full overflow-hidden">
+      <div className="relative m-4 flex justify-items-center-center h-full overflow-hidden">
         {loading ? (
           <TarotPlaceholder />
         ) : imageURL ? (

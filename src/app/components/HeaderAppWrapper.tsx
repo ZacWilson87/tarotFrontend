@@ -1,4 +1,5 @@
 import {
+  Button,
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
@@ -44,18 +45,17 @@ export default function HeaderAppWrapper({
   return (
     <>
       <div className="min-h-full">
-        <div className="bg-gray-800 pb-32">
-          <Disclosure as="nav" className="bg-gray-800">
+        <div className=" pb-32">
+          <Disclosure
+            as="nav"
+            className="h-full w-full bg-gray-200 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 "
+          >
             <div className="mx-auto max-w-full sm:px-3">
-              <div className="border-b border-gray-700">
+              <div className="">
                 <div className="flex h-16 items-center justify-between px-4 sm:px-0">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <img
-                        alt="Your Company"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        className="h-8 w-8"
-                      />
+                      <p>SOOTHSaiYER</p>
                     </div>
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
@@ -81,19 +81,19 @@ export default function HeaderAppWrapper({
                     {true ? ( // TODO: Check if user is logged in
                       <>
                         <div className="ml-4 flex items-center md:ml-6">
-                          <button
+                          <Button
                             type="button"
-                            className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                            className="relative rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                           >
                             <span className="absolute -inset-1.5" />
                             <span className="sr-only">View notifications</span>
                             <BellIcon aria-hidden="true" className="h-6 w-6" />
-                          </button>
+                          </Button>
 
                           {/* Profile dropdown */}
                           <Menu as="div" className="relative ml-3">
                             <div>
-                              <MenuButton className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                              <MenuButton className="relative flex max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                                 <span className="absolute -inset-1.5" />
                                 <span className="sr-only">
                                   Open placholderUser menu
@@ -148,7 +148,7 @@ export default function HeaderAppWrapper({
               </div>
             </div>
 
-            <DisclosurePanel className="border-b border-gray-700 md:hidden">
+            <DisclosurePanel className="border-b border-gray-700 bg-gray-800 opacity-75 md:hidden">
               <div className="space-y-1 px-2 py-3 sm:px-3">
                 {navigation.map((item) => (
                   <DisclosureButton
@@ -209,19 +209,13 @@ export default function HeaderAppWrapper({
             </DisclosurePanel>
           </Disclosure>
           <header className="py-10">
-            <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-white">
-                Dashboard
-              </h1>
-            </div>
+            <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8"></div>
           </header>
         </div>
 
         <main className="-mt-32">
           <div className="mx-auto max-w-full px-4 pb-12 sm:px-6 lg:px-8">
-            <div className="rounded-lg bg-gray-700 px-2 py-1 shadow sm:px-1">
-              {children}
-            </div>
+            <div className="rounded-lg  px-2 py-1 sm:px-1">{children}</div>
           </div>
         </main>
       </div>
